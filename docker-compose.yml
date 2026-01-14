@@ -1,9 +1,19 @@
-version: '3.8'
-
 services:
   stellar-chess:
     build: .
     container_name: stellar-chess
-    ports:
-      - "8080:80"
     restart: unless-stopped
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stellar-chess.rule=Host(`apps.aloha.university`) && PathPrefix(`/stellar-chess`)"
+      - "traefik.http.routers.stellar-chess.entrypoints=websecure"
+      - "traefik.http.routers.stellar-chess.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.stellar-chess.middlewares=stellar-chess-strip"
+      - "traefik.http.middlewares.stellar-chess-strip.stripprefix.prefixes=/stellar-chess"
+      - "traefik.http.services.stellar-chess.loadbalancer.server.port=80"
+
+networks:
+  web:
+    external: true
