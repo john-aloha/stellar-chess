@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  stellar-chess:
+    build: .
+    container_name: stellar-chess
+    ports:
+      - "8080:80"
+    restart: unless-stopped

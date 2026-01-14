@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Stellar Chess - A futuristic sci-fi space chess game">
+    <title>Stellar Chess | Space Battle Chess</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="space-background">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="nebula"></div>
+    </div>
+
+    <div id="main-menu" class="screen active">
+        <div class="menu-container">
+            <div class="logo-container">
+                <h1 class="game-logo"><span class="logo-stellar">STELLAR</span><span class="logo-chess">CHESS</span>
+                </h1>
+                <p class="tagline">Command the Galaxy • Conquer the Board</p>
+            </div>
+            <div class="menu-buttons">
+                <button class="menu-btn primary" id="btn-vs-computer"><span class="btn-icon">🤖</span><span>VS
+                        COMPUTER</span></button>
+                <button class="menu-btn secondary" id="btn-two-player"><span class="btn-icon">👥</span><span>TWO
+                        PLAYERS</span></button>
+                <button class="menu-btn tertiary" id="btn-settings"><span
+                        class="btn-icon">⚙️</span><span>SETTINGS</span></button>
+            </div>
+            <div class="stats-preview">
+                <div class="stat-item"><span class="stat-value" id="menu-rank">CADET</span><span
+                        class="stat-label">Rank</span></div>
+                <div class="stat-item"><span class="stat-value" id="menu-xp">0</span><span class="stat-label">XP</span>
+                </div>
+                <div class="stat-item"><span class="stat-value" id="menu-wins">0</span><span
+                        class="stat-label">Victories</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="difficulty-screen" class="screen">
+        <div class="screen-container">
+            <button class="back-btn" id="btn-back-difficulty">← BACK</button>
+            <h2 class="screen-title">SELECT DIFFICULTY</h2>
+            <div class="difficulty-cards">
+                <div class="difficulty-card" data-difficulty="easy">
+                    <div class="card-icon">🌟</div>
+                    <h3>ENSIGN</h3>
+                    <p>Basic tactics</p>
+                    <div class="xp-bonus">+50 XP</div>
+                </div>
+                <div class="difficulty-card" data-difficulty="medium">
+                    <div class="card-icon">⚡</div>
+                    <h3>COMMANDER</h3>
+                    <p>Strategic play</p>
+                    <div class="xp-bonus">+100 XP</div>
+                </div>
+                <div class="difficulty-card" data-difficulty="hard">
+                    <div class="card-icon">🔥</div>
+                    <h3>ADMIRAL</h3>
+                    <p>Maximum threat</p>
+                    <div class="xp-bonus">+200 XP</div>
+                </div>
+            </div>
+            <div class="color-selection">
+                <h3>CHOOSE YOUR FLEET</h3>
+                <div class="color-buttons">
+                    <button class="color-btn active" data-color="white"><span
+                            class="fleet-icon">♔</span><span>LIGHT</span></button>
+                    <button class="color-btn" data-color="black"><span
+                            class="fleet-icon">♚</span><span>DARK</span></button>
+                </div>
+            </div>
+            <button class="start-game-btn" id="btn-start-vs-ai">ENGAGE BATTLE</button>
+        </div>
+    </div>
+
+    <div id="settings-screen" class="screen">
+        <div class="screen-container">
+            <button class="back-btn" id="btn-back-settings">← BACK</button>
+            <h2 class="screen-title">SETTINGS</h2>
+            <div class="settings-group">
+                <div class="setting-item"><span>Sound Effects</span><label class="toggle-switch"><input type="checkbox"
+                            id="toggle-sfx" checked><span class="toggle-slider"></span></label></div>
+                <div class="setting-item"><span>Music</span><label class="toggle-switch"><input type="checkbox"
+                            id="toggle-music" checked><span class="toggle-slider"></span></label></div>
+                <div class="setting-item"><span>Volume</span><input type="range" id="volume-slider" min="0" max="100"
+                        value="70"></div>
+                <div class="setting-item"><span>Show Hints</span><label class="toggle-switch"><input type="checkbox"
+                            id="toggle-hints" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="settings-group">
+                <h3>Statistics</h3>
+                <div class="stats-display">
+                    <div class="stat-row"><span>Games</span><span id="stat-total-games">0</span></div>
+                    <div class="stat-row"><span>Wins</span><span id="stat-wins">0</span></div>
+                    <div class="stat-row"><span>Losses</span><span id="stat-losses">0</span></div>
+                </div>
+                <button class="reset-btn" id="btn-reset-stats">RESET STATS</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen">
+        <div class="game-container">
+            <div class="player-panel top-panel">
+                <div class="player-info">
+                    <div class="player-avatar opponent"><span id="opponent-icon">🤖</span></div>
+                    <div class="player-details"><span class="player-name" id="opponent-name">COMPUTER</span><span
+                            class="player-rank" id="opponent-rank">COMMANDER</span></div>
+                </div>
+                <div class="captured-pieces" id="opponent-captured"></div>
+                <div class="player-timer"><span id="opponent-timer">10:00</span></div>
+            </div>
+            <div class="board-container">
+                <div class="board-frame">
+                    <div id="chess-board" class="chess-board"></div>
+                </div>
+            </div>
+            <div class="player-panel bottom-panel">
+                <div class="player-info">
+                    <div class="player-avatar player"><span>👤</span></div>
+                    <div class="player-details"><span class="player-name" id="player-name">PLAYER</span><span
+                            class="player-rank" id="player-rank">CADET</span></div>
+                </div>
+                <div class="captured-pieces" id="player-captured"></div>
+                <div class="player-timer"><span id="player-timer">10:00</span></div>
+            </div>
+            <div class="game-status">
+                <div class="turn-indicator"><span>TURN:</span><span id="turn-indicator">WHITE</span></div>
+                <div id="game-message"></div>
+            </div>
+            <div class="game-controls">
+                <button class="control-btn" id="btn-undo">↶</button>
+                <button class="control-btn" id="btn-pause">⏸</button>
+                <button class="control-btn" id="btn-resign">🏳️</button>
+                <button class="control-btn" id="btn-menu">☰</button>
+            </div>
+        </div>
+        <div class="score-display">
+            <div class="xp-bar">
+                <div class="xp-fill" id="xp-fill"></div><span id="xp-text">0 / 500 XP</span>
+            </div>
+            <div class="current-rank"><span>🎖️</span><span id="current-rank">CADET</span></div>
+        </div>
+    </div>
+
+    <div id="game-over-modal" class="modal">
+        <div class="modal-content game-over">
+            <div class="result-icon" id="result-icon">🏆</div>
+            <h2 id="result-title">VICTORY</h2>
+            <p id="result-message">Checkmate!</p>
+            <div class="result-stats">
+                <div class="result-stat"><span>Moves</span><span id="result-moves">0</span></div>
+                <div class="result-stat"><span>Time</span><span id="result-time">0:00</span></div>
+                <div class="result-stat"><span>XP</span><span id="result-xp">+100</span></div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="btn-play-again">PLAY AGAIN</button>
+                <button class="modal-btn secondary" id="btn-main-menu">MAIN MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="promotion-modal" class="modal">
+        <div class="modal-content promotion">
+            <h2>PROMOTE PAWN</h2>
+            <div class="promotion-pieces" id="promotion-pieces"></div>
+        </div>
+    </div>
+
+    <div id="pause-modal" class="modal">
+        <div class="modal-content pause">
+            <h2>PAUSED</h2>
+            <div class="modal-buttons"><button class="modal-btn primary" id="btn-resume">RESUME</button><button
+                    class="modal-btn secondary" id="btn-quit-game">QUIT</button></div>
+        </div>
+    </div>
+
+    <script src="audio.js"></script>
+    <script src="chess-engine.js"></script>
+    <script src="chess-ai.js"></script>
+    <script src="game.js"></script>
+</body>
+
+</html>
